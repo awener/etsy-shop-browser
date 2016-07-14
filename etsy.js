@@ -10,12 +10,7 @@ exports.fetch = function(storeName, main_callback, progress_callback) {
 	var total = 0;
 	var done = 0;
 	var job = {
-		itemParser: function(url, callback) {
-			request(url, function(err, response, body) {
-				if(err) return callback(true, err);
-
-			})
-		},
+	
 		filter: function(data, callback) {
 
 			var holder = {};
@@ -41,8 +36,8 @@ exports.fetch = function(storeName, main_callback, progress_callback) {
 		}
 	}
 
-	request(shop, function(err, response, body) {
-		body = response.body
+	request(shop, function(err, response) {
+		var body = response.body
 		if(err) return main_callback(true, err);
 		if(body.match('has gone awry')) return main_callback(true, 'No such user.');
 		var pages = (body.match(/data-page="(\d+)"/g));
@@ -65,8 +60,8 @@ exports.fetch = function(storeName, main_callback, progress_callback) {
 				
 				if(totalRequests == 5) return callback(); // skip page.
 				
-				request(url, function(err, response, body) {
-					body = response.body
+				request(url, function(err, response) {
+					var body = response.body;
 					if(err) {
 						console.log('Request failed: ' + totalRequests);
 						totalRequests++;
@@ -96,8 +91,8 @@ exports.fetch = function(storeName, main_callback, progress_callback) {
 
 
 				var d = {};
-				request(item, function(err, response, body) {
-					body = response.body;
+				request(item, function(err, response) {
+					var body = response.body;
 					if(totalRequests == 5) return callback();
 					if(err) {
 						totalRequests++;
