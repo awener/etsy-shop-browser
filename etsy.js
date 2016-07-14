@@ -131,6 +131,3 @@ exports.fetch = function(storeName, main_callback, progress_callback) {
 }
 
 
-// main app 82 seconds
-
-// my solution currently: 63 seconds
